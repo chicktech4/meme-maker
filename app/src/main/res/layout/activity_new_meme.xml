@@ -53,14 +53,15 @@
         <EditText
             android:id="@+id/top_text_input"
             android:layout_width="match_parent"
-            android:background="@android:color/transparent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:hint="Top Text"
             android:layout_alignTop="@id/image_thumbnail"
-        />
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:hint="Top Text"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/holo_blue_bright"
+            android:textColorLink="@android:color/white"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/bottom_text_input"
@@ -80,5 +81,24 @@
         android:layout_height="wrap_content"
         android:text="Save"
         style="@style/Button.Primary"/>
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blue"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:id="@+id/BlueButton"
+        />
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Black"
+    android:textColor="@android:color/white"
+    android:backgroundTint="@android:color/black"
+    android:id="@+id/BlackButton"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Red"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:id="@+id/RedButton" />
 </LinearLayout>

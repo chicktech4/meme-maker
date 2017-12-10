@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,14 +61,67 @@ public class NewMemeActivity extends AppCompatActivity {
         // Get reference for cameraButton, create OnClickListener for
         // cameraButton and set OnclickListener for cameraButton
         Button cameraButton = (Button) findViewById(R.id.camera_button);
+        cameraButton.setOnClickListener(getCameraOnClickListener());
 
         // Get reference for galleryButton, create OnClickListener for
         // galleryButton and set OnclickListener for galleryButton
         Button galleryButton = (Button) findViewById(R.id.gallery_button);
+        galleryButton.setOnClickListener(getGalleryOnClickListener());
 
         // Get reference for saveButton, create OnClickListener for
         // saveButton and set OnclickListener for saveButton
         Button saveButton = (Button) findViewById(R.id.save_button);
+        saveButton.setOnClickListener(getSaveOnClickListener());
+        Button Blue_Color = (Button) findViewById(R.id.BlueButton);
+        Blue_Color.setOnClickListener(getBlueButtonOnClickListener());
+
+        Button BlackColor = (Button) findViewById(R.id.BlackButton);
+        BlackColor.setOnClickListener(getBlackButtonOnClickListener());
+
+        Button RedColor = (Button) findViewById(R.id.RedButton);
+        RedColor.setOnClickListener(getRedButtonOnClickListener());
+
+
+    }
+
+    private View.OnClickListener getBlueButtonOnClickListener() {
+        View.OnClickListener BlueButtonOnClickListener = new View.OnClickListener() {
+            // This `onClick` is to be called when the cameraButton,
+            // the one with the 'Take Photo` text, is clicked by the user.
+            @Override
+            public void onClick(View view) {
+                EditText TopText = (EditText) findViewById(R.id.top_text_input);
+                TopText.setTextColor(getResources().getColor(android.R.color.holo_blue_bright));
+            }
+        };
+
+        return BlueButtonOnClickListener;
+    }
+    private View.OnClickListener getBlackButtonOnClickListener() {
+        View.OnClickListener BlackButtonOnClickListener = new View.OnClickListener() {
+            // This `onClick` is to be called when the cameraButton,
+            // the one with the 'Take Photo` text, is clicked by the user.
+            @Override
+            public void onClick(View view) {
+                EditText TopText = (EditText) findViewById(R.id.top_text_input);
+                TopText.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        };
+
+        return BlackButtonOnClickListener;
+    }
+    private View.OnClickListener getRedButtonOnClickListener() {
+        View.OnClickListener RedButtonOnClickListener = new View.OnClickListener() {
+            // This `onClick` is to be called when the cameraButton,
+            // the one with the 'Take Photo` text, is clicked by the user.
+            @Override
+            public void onClick(View view) {
+                EditText TopText = (EditText) findViewById(R.id.top_text_input);
+                TopText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            }
+        };
+
+        return RedButtonOnClickListener;
     }
 
     /**
@@ -109,6 +164,7 @@ public class NewMemeActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "You have permission! Now what?", Toast.LENGTH_LONG).show();
             //TODO: open the camera
+            openCamera();
         }
     }
 
@@ -160,6 +216,7 @@ public class NewMemeActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You have permission! Now what?", Toast.LENGTH_LONG).show();
             //todo: open the gallery
+        openGallery();
         }
     }
 
@@ -217,6 +274,7 @@ public class NewMemeActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You have permission! Now what?", Toast.LENGTH_LONG).show();
             //todo: save the meme
+            saveMeme();
         }
     }
 
@@ -308,6 +366,7 @@ public class NewMemeActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_TAKE_PHOTO && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            setThumbnail(imageBitmap);
             Toast.makeText(this, "You have a photo from the camera! Now what?", Toast.LENGTH_LONG).show();
         }
         /**
@@ -317,7 +376,7 @@ public class NewMemeActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
             try {
                 Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                Toast.makeText(this, "You have a photo from the gallery! Now what?", Toast.LENGTH_LONG).show();
+                setThumbnail(image);
             } catch (IOException e) {
                 e.printStackTrace();
             }
